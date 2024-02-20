@@ -1,12 +1,14 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 class node{
-    public:
-        int data;
-        node *next;
+public:
+    int data;
+    node *prev;
+    node *next;
     node(int x){
         data=x;
+        prev=NULL;
         next=NULL;
     }
 };
@@ -23,17 +25,27 @@ int size(node *&head){
 
 void insert_head(node *&head, int x){
     node *newNode=new node(x);
-    newNode->next=head; // notun node er next e head connect korlam 
-    head=newNode; // notun node ta head banmai dilam
+    if(!head){
+        head=newNode;
+        return;
+    }
+    newNode->next=head;
+    head->prev=newNode;
+    head=newNode;
 }
 
-void insert_tail(node *&head, int x){
+void insert_tail(node *&head,int x){
     node *newNode=new node(x);
+    if(!head){
+        head=newNode;
+        return;
+    }
     node *tmp=head;
     while(tmp->next){
-        tmp=tmp->next; // head theke loop chalai last e gelam
+        tmp=tmp->next;
     }
-    tmp->next=newNode; // last e new node connect kore dilam
+    tmp->next=newNode;
+    newNode->prev=tmp;
 }
 
 void insert_pos(node *&head,int pos,int x){
@@ -48,43 +60,49 @@ void insert_pos(node *&head,int pos,int x){
     node *newNode=new node(x);
     node *tmp=head;
     for(int i=1;i<pos;i++){
-        tmp=tmp->next; // head theke loop chalai position e gelam
+        tmp=tmp->next;
     }
-    newNode->next=tmp->next; // age new tar shathe next ta connect
-    tmp->next=newNode; // tarpor new ta main tai connect
+    newNode->next=tmp->next;
+    newNode->prev=tmp;
+    tmp->next->prev=newNode;
+    tmp->next=newNode;
 }
 
 void delete_pos(node *&head,int pos){
-    if(!(size(head))) return; // size zero hoile delete korbo na
-    if(pos<0 || pos>=size(head)){ // position 0 er choto ba size er boro dile invalid position
+    if(!size(head)){
+        cout<<"List is empty!"<<endl;
+        return;
+    }
+    if(pos<0 || pos>=size(head)){
         cout<<"Invalid position!"<<endl;
         return;
     }
     node* tmp=head;
-    if(pos==0){ 
-        head=head->next; // head er next head hobe
-        delete tmp; 
+    if(pos==0){
+        head=head->next;
+        delete tmp;
+        if(head) head->prev=NULL;
         return;
     }
-    for(int i=1;i<pos;i++){
-        tmp=tmp->next; // loop chalai deleting node er ager position e jabo
+    for(int i=0;i<pos;i++){
+        tmp=tmp->next;
     }
-    node* deleteNode=tmp->next; // position er porerta delete korar jonno nibo 
-    tmp->next=tmp->next->next; // deleting node er porer tar shathe deleting node er ager tar connection korbo
-    delete deleteNode; // delete
+    tmp->prev->next=tmp->next;
+    if(tmp->next) tmp->next->prev=tmp->prev;
+    delete tmp;
 }
 
 void print(node *head){
-    cout<<"List: "<<endl;
+    cout<<"List: ";
     node *tmp=head;
-    while(tmp!=NULL){
+    while(tmp){
         cout<<tmp->data<<" ";
         tmp=tmp->next;
     }
     cout<<endl;
 }
 
-int main(){
+int main() {
     node* head=NULL;
     while(true){
         cout<<"1: Insert"<<endl;
