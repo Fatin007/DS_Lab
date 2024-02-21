@@ -19,7 +19,7 @@ void bfs(int src){
     vis_bfs[src]=true;
     while(q.size()){
         int par=q.front();
-        q.pop();
+        q.pop(); 
         cout<<par<<" ";
         for(auto child:graph[par]){
             if(!vis_bfs[child]){
