@@ -27,7 +27,7 @@ void insert(node *&head,int v){
 int count(node *head){
    node *tmp=head;
    int cnt=0;
-   while(tmp!=NULL){
+   while(tmp){
       tmp=tmp->next;
       cnt++;
    }
