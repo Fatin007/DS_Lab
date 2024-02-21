@@ -3,7 +3,7 @@ using namespace std;
 
 const int N=100;
 
-class Stack {
+class Stack{
 public:
     int a[N];
     int t;
