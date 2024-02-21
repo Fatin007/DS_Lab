@@ -86,7 +86,7 @@ void print(node *head){
 
 int main(){
     node* head=NULL;
-    while(true){
+    while(69){
         cout<<"1: Insert"<<endl;
         cout<<"2: Delete"<<endl;
         cout<<"3: Print list"<<endl;

@@ -1,28 +1,22 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N=100;
 
 class Stack {
 public:
-    int arr[N];
+    int a[N];
     int t;
-    Stack(){
-        t=-1;
-    }
-    bool empty(){
-        return t==-1;
-    }
-    bool full(){
-        return t==N-1;
-    }
+    Stack(){t=-1;}
+    bool empty(){return t==-1;} // eikhane == use korsi
+    bool full(){return t==N-1;} // eikhaneo
     void push(int x){
-        if (full()){
+        if(full()){
             cout<<"Stack overflow!"<<endl;
             return;
         }
         t++;
-        arr[t]=x; 
+        a[t]=x; 
     }
     void pop(){
         if(empty()){
@@ -36,7 +30,7 @@ public:
             cout<<"Stack is empty!"<<endl;
             return -1;
         }
-        return arr[t];
+        return a[t];
     }
 };
 
